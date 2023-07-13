@@ -7,6 +7,7 @@ const App = () => {
   const [password, setPassword] = useState('AIEscapeChamps');
   const [guess, setGuess] = useState('');
   const [feedback, setFeedback] = useState('');
+  const [currentTipIndex, setCurrentTipIndex] = useState(0);
 
   const tips = [
     'Think of a group of extraordinary individuals who excel at solving puzzles and escaping tricky situations. This password is a tribute to their skills!',
@@ -25,14 +26,17 @@ const App = () => {
     }
   };
 
+  const showNextTip = () => {
+    setCurrentTipIndex((prevIndex) => prevIndex + 1);
+  };
+
   return (
     <div>
       <h1>Password Cracking Game</h1>
-      <Tip tip={tips[0]} />
-      <Tip tip={tips[1]} />
-      <Tip tip={tips[2]} />
-      <Tip tip={tips[3]} />
-      <Tip tip={tips[4]} />
+      <button type="button" class="btn btn-outline-info" onClick={showNextTip}>Show Next Tip</button>
+      {currentTipIndex < tips.length && (
+        <Tip tip={tips[currentTipIndex]} />
+      )}
       <PasswordInput
         value={guess}
         onChange={(event) => setGuess(event.target.value)}
